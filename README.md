@@ -2,7 +2,7 @@
 
 This project features a comprehensive design and implementation of a multi-site enterprise network infrastructure, simulated in **Cisco Packet Tracer**. The topology is engineered to ensure **high availability, robust security, and seamless scalability**, covering advanced topics from the CCNA and CCNP curricula.
 
-![Network Topology](assets/topology.png)
+![Network Topology](assets/topologia.png)
 
 ## 🚀 Key Features
 
