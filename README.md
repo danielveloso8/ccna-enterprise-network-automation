@@ -1,51 +1,50 @@
-# 🌐 Enterprise Multi-Office Network Design & Automation (CCNA Level)
+# 🌐 Enterprise Multi-Office Network Design & Implementation (CCNA Level)
 
-Este projeto consiste no design e implementação de uma infraestrutura de rede empresarial multi-site, simulada no Cisco Packet Tracer. A topologia foi desenhada para garantir **alta disponibilidade, segurança e escalabilidade**, cobrindo os tópicos fundamentais e avançados do currículo CCNA/CCNP.
+This project features a comprehensive design and implementation of a multi-site enterprise network infrastructure, simulated in **Cisco Packet Tracer**. The topology is engineered to ensure **high availability, robust security, and seamless scalability**, covering advanced topics from the CCNA and CCNP curricula.
 
+![Network Topology](assets/topology.png)
 
-## 🚀 Funcionalidades Principais
+## 🚀 Key Features
 
-* [cite_start]**Redundância L2/L3:** Implementação de EtherChannels (PAgP e LACP) e HSRPv2 para failover de gateway. [cite: 5, 6, 36, 44]
-* [cite_start]**Encaminhamento Dinâmico:** Configuração de OSPFv2 (Área 0) com otimização de interfaces passivas e tipos de rede. [cite: 56, 59, 60]
-* [cite_start]**Segurança Avançada:** Proteção contra ataques de Camada 2 (DHCP Snooping, DAI, Port Security com Sticky MACs) e ACLs Estendidas para controlo de tráfego inter-office. [cite: 105, 109, 115, 118]
-* [cite_start]**Serviços de Rede:** Configuração completa de DHCP, DNS, NTP Autenticado, SNMP, Syslog e NAT/PAT com failover de link. [cite: 65, 73, 75, 81, 94]
-* [cite_start]**Infraestrutura Wireless:** Gestão centralizada via WLC (Wireless LAN Controller) com segurança WPA2-PSK. [cite: 126, 131]
-* [cite_start]**Preparação IPv6:** Migração dual-stack utilizando endereçamento EUI-64 e rotas estáticas flutuantes. [cite: 120, 121, 125]
-
----
-
-## 🛠️ Detalhes da Implementação
-
-### 1. Camada de Acesso e Distribuição (L2/L3)
-* [cite_start]**VLANs & VTP:** Organização da rede em VLANs específicas para Dados, Voz, Wi-Fi e Gestão, propagadas via VTPv2. [cite: 11, 13, 16]
-* [cite_start]**Spanning Tree:** Otimização do Rapid PVST+ alinhando o Root Bridge com o router HSRP Ativo para evitar caminhos sub-ótimos. [cite: 51, 52]
-* [cite_start]**PortFast & BPDU Guard:** Ativados em todas as portas de acesso para garantir convergência rápida e proteção contra loops externos. [cite: 54]
-
-### 2. Conectividade e Routing
-* [cite_start]**HSRPv2:** Configurado para redundância de primeiro salto, com preempção e prioridades ajustadas para balanceamento de carga entre switches de distribuição. [cite: 36, 40, 48]
-* [cite_start]**OSPF:** Processo ID 1, utilizando Router-IDs manuais baseados em interfaces Loopback para estabilidade do plano de controlo. [cite: 56]
-* [cite_start]**NAT/PAT:** Pool dinâmico (POOL1) configurado no Router R1 para acesso à Internet com verificação de failover via floating static routes. [cite: 94, 97, 63]
-
-### 3. Gestão e Segurança (L2 Security)
-* [cite_start]**SSHv2:** Acesso remoto seguro restringido por ACLs standard, permitindo apenas acessos provenientes da rede de gestão. [cite: 88, 90]
-* [cite_start]**DHCP Snooping & DAI:** Implementados para mitigar ataques de Rogue DHCP e ARP Spoofing. [cite: 115, 119]
-* [cite_start]**Port Security:** Limitação de MAC addresses por porta e modo de violação 'restrict' com logging via SNMP/Syslog. [cite: 109, 112]
+* **L2/L3 Redundancy:** Implementation of EtherChannels (PAgP and LACP) for link aggregation and HSRPv2 for first-hop gateway redundancy.
+* **Dynamic Routing:** Configured OSPFv2 (Area 0) with optimized passive interfaces, custom cost metrics, and stable Router-IDs.
+* **Advanced Security:** Mitigated Layer 2 attacks using DHCP Snooping, Dynamic ARP Inspection (DAI), and Port Security (Sticky MACs). Extended ACLs control inter-office traffic.
+* **Network Services:** Full suite of services including NAT/PAT with failover, DHCP, DNS, Authenticated NTP, SNMP, and Syslog.
+* **Wireless Infrastructure:** Centralized management via WLC (Wireless LAN Controller) using WPA2-PSK security.
+* **IPv6 Readiness:** Dual-stack migration using EUI-64 addressing and floating static routes for WAN backup.
 
 ---
 
-## 📂 Estrutura do Repositório
+## 🛠️ Technical Implementation Details
 
-* `/projeto-ccna.pka`: Ficheiro do Cisco Packet Tracer com a configuração final.
-* `/docs`: Prints de validação (tabelas de routing, adjacências OSPF, pings).
-* `README.md`: Documentação do projeto.
+### 1. Switching & Layer 2 Stability
+* **EtherChannel:** Configured Port-Channels between Distribution switches using Cisco-proprietary PAgP (Office A) and industry-standard LACP (Office B).
+* **Spanning Tree (Rapid PVST+):** Optimized convergence by aligning the Root Bridge with the HSRP Active router to prevent sub-optimal traffic paths.
+* **VLAN & VTP:** Structured network segmentation (Data, Voice, Wi-Fi, Management) propagated via VTPv2.
+* **Edge Protection:** BPDU Guard and PortFast enabled on all access ports to ensure immediate connectivity and loop protection.
 
-## 💻 Como utilizar
-1.  Transfira o ficheiro `.pka`.
-2.  Abra no **Cisco Packet Tracer (v8.x ou superior)**.
-3.  Utilize as credenciais configuradas:
-    * **User:** `cisco`
-    * **Secret:** `ccna`
-    * [cite_start]**Enable Secret:** `jeremysitlab` [cite: 2, 3]
+### 2. Routing & Connectivity
+* **HSRPv2:** Configured for gateway redundancy with preemption and priority tuning to balance traffic load across distribution layers.
+* **OSPFv2:** Process ID 1, Area 0. Loopback interfaces used for consistent Router-IDs. Point-to-point network types configured on transit links for faster convergence.
+* **NAT/PAT:** Dynamic PAT (Overload) configured on the Edge Router (R1) with a backup floating static route for ISP failover.
+
+### 3. Security & Management
+* **Device Hardening:** Local AAA with secret password hashing (Type 9), SSHv2 only for remote management, and console timeouts.
+* **Infrastructure Security:** ACLs implemented to segment the guest Wi-Fi from the internal server farm and management network.
+* **L2 Security:** DHCP Snooping and DAI enabled on all access switches to prevent Rogue DHCP and ARP Spoofing attacks.
 
 ---
-*Projeto desenvolvido como parte dos estudos para a certificação Cisco CCNA.*
+
+## 📂 Repository Structure
+
+* `/ccna_enterprise_lab.pka`: The Cisco Packet Tracer lab file containing the full configuration.
+* `/assets`: Contains the network topology diagrams and validation screenshots.
+* `README.md`: Project documentation.
+
+## 💻 How to Use
+1.  Download the `.pka` file.
+2.  Open it using **Cisco Packet Tracer (v8.2 or superior)**.
+3.  Use the following credentials for device access:
+    * **Username:** `cisco`
+    * **Password:** `ccna`
+    * **Enable Secret:** `jeremysitlab`
